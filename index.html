@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Phishing Training • Prime Radiant</title>
+  <meta name="description" content="Prime Radiant phishing awareness landing page." />
+  <style>
+    :root{
+      --brand-navy:#39415C; --brand-gold:#E0A800; --brand-gold-2:#F9CF2A;
+      --brand-ivory:#FAFBF6; --brand-amber:#A57C00; --brand-purple:#8F6CC2; --brand-lav:#DDC2FF;
+      --bg1:#0f172a; --bg2:var(--brand-navy); --fg:#e5e7eb; --muted:#b6becc; --glass:rgba(255,255,255,.06);
+    }
+    body{
+      margin:0; color:var(--fg);
+      background:
+        radial-gradient(1200px 600px at 70% 20%, rgba(249,207,42,0.06) 0%, transparent 60%),
+        linear-gradient(135deg, var(--bg1), var(--bg2));
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, "Helvetica Neue", Arial;
+      display:grid; place-items:center; height:100vh;
+    }
+    .wrap{width:min(1100px,92vw); padding:2rem 1.25rem 3rem; text-align:center}
+    .branding img{height:60px; filter:drop-shadow(0 2px 6px rgba(0,0,0,.35))}
+    h1{font-size:clamp(1.4rem, 2.2vw, 2rem); margin:0.5rem 0 1rem}
+    .panel{background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03)); border:1px solid rgba(255,255,255,.12); border-radius:18px; padding:2rem; box-shadow:0 10px 30px rgba(0,0,0,.24)}
+    .gotcha{font-weight:900; text-transform:uppercase; font-size:clamp(1.2rem,3vw,1.6rem); color:#fff; padding:.35rem .8rem; border-radius:999px; border:1px solid rgba(224,168,0,.45); background:linear-gradient(90deg, rgba(224,168,0,.18), rgba(143,108,194,.18))}
+    .big{font-weight:800; font-size:clamp(2rem,7vw,5rem); margin:1rem 0; text-shadow:0 2px 12px rgba(0,0,0,.35)}
+    .subtitle{color:var(--muted); font-size:1rem}
+    .callout{border:1px dashed rgba(255,255,255,.18); background:rgba(255,255,255,.04); padding:1rem; border-radius:14px; margin-top:1rem}
+    .addr{font-family:monospace; font-weight:600}
+    .code{font-weight:800; color:var(--brand-gold-2)}
+    .btn{border:1px solid rgba(255,255,255,.14); background:rgba(255,255,255,.06); padding:.7rem 1rem; border-radius:12px; color:#fff; font-weight:700; cursor:pointer; margin:.5rem; text-decoration:none; display:inline-block}
+    .btn.primary{border-color:#e0a80066; background:linear-gradient(90deg, rgba(224,168,0,.20), rgba(143,108,194,.20))}
+    footer{margin-top:1.25rem; color:var(--muted); font-size:.85rem}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="branding">
+      <img src="prime-radiant-logo-inverse.svg" alt="Prime Radiant Logo">
+    </div>
+    <h1>Phishing Awareness Training</h1>
+
+    <section class="panel">
+      <div class="gotcha">You just got got!</div>
+      <div class="big">You clicked a link in a phishing email.</div>
+
+      <div class="callout">
+        <div class="subtitle">Take a picture of this screen and send it to <span class="addr">tech@primeradiant.cloud</span></div>
+        <div class="subtitle">Include this incident code: <span id="icode" class="code">—</span></div>
+        <a id="mailto" class="btn primary">📧 Email this</a>
+        <button id="copy" class="btn">📋 Copy address</button>
+      </div>
+    </section>
+
+    <footer>
+      <p>This page is for internal security training at Prime Radiant.</p>
+    </footer>
+  </div>
+
+  <script>
+    (function(){
+      const code = (()=>{
+        const d=new Date();
+        const yy=String(d.getUTCFullYear()).slice(-2);
+        const mm=String(d.getUTCMonth()+1).padStart(2,'0');
+        const dd=String(d.getUTCDate()).padStart(2,'0');
+        const rand=Math.random().toString(16).slice(2,6).toUpperCase();
+        return `${yy}-${mm}-${dd}-${rand}`;
+      })();
+      document.getElementById('icode').textContent=code;
+
+      const address='tech@primeradiant.cloud';
+      document.getElementById('mailto').href=`mailto:${address}?subject=[Phishing Training] Incident ${code}`;
+      document.getElementById('copy').addEventListener('click',()=>navigator.clipboard.writeText(address));
+    })();
+  </script>
+</body>
+</html>
